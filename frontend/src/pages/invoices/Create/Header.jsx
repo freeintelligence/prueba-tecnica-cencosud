@@ -26,7 +26,7 @@ export default function Header() {
             inputFormat="DD-MM-YYYY"
             value={broadcastDate}
             onChange={(value) => { setBroadcastDate(value); setValue("broadcastDate", value, { shouldValidate: true }) }}
-            renderInput={(params) => <TextField {...params} {...register("broadcastDate", { required: true })} error={!!errors.broadcastDate} helperText={errors.broadcastDate ? 'La fecha es inválida!' : ''} />}
+            renderInput={(params) => <TextField {...params} {...register("broadcastDate", { required: true })} error={!!errors.broadcastDate} helperText={errors.broadcastDate ? 'Fecha inválida' : ''} />}
           />
         </Grid>
       </Grid>

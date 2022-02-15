@@ -18,7 +18,7 @@ export default function SenderData() {
   const [ economicTwist, setEconomicTwist ] = useState();
   const [ economicActivity, setEconomicActivity ] = useState();
 
-  const { register, setValue } = useFormContext();
+  const { register, setValue, formState: { errors } } = useFormContext();
 
   return (<>
     <CardHeader avatar={<PersonPinTwoToneIcon fontSize="large" color="secondary" />} title="DATOS EMISOR" subheader="Emisión de factura" />
@@ -26,6 +26,7 @@ export default function SenderData() {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
+            {...register("businessName", { required: true })} error={!!errors.businessName} helperText={errors.businessName ? 'La razón social es obligatoria' : ''}
             label="Razón social"
             value={businessName}
             onChange={e => { setBusinessName(e.target.value); setValue("businessName", e.target.value, { shouldValidate: true }) }}
@@ -33,6 +34,7 @@ export default function SenderData() {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            {...register("address", { required: true })} error={!!errors.address} helperText={errors.address ? 'La dirección es obligatoria' : ''}
             label="Dirección"
             value={address}
             onChange={e => { setAddress(e.target.value); setValue("address", e.target.value, { shouldValidate: true }) }}
@@ -40,6 +42,7 @@ export default function SenderData() {
         </Grid>
         <Grid item xs={3}>
           <TextField
+            {...register("commune", { required: true })} error={!!errors.commune} helperText={errors.commune ? 'La comuna es obligatoria' : ''}
             label="Comuna"
             value={commune}
             onChange={e => { setCommune(e.target.value); setValue("commune", e.target.value, { shouldValidate: true }) }}
@@ -47,6 +50,7 @@ export default function SenderData() {
         </Grid>
         <Grid item xs={3}>
           <TextField
+            {...register("city", { required: true })} error={!!errors.city} helperText={errors.city ? 'La ciudad es obligatoria' : ''}
             label="Ciudad"
             value={city}
             onChange={e => { setCity(e.target.value); setValue("city", e.target.value, { shouldValidate: true }) }}
@@ -54,6 +58,7 @@ export default function SenderData() {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            {...register("email", { required: true })} error={!!errors.email} helperText={errors.email ? 'El correo electrónico es obligatorio' : ''}
             label="Correo electrónico"
             value={email}
             onChange={e => { setEmail(e.target.value); setValue("email", e.target.value, { shouldValidate: true }) }}
@@ -61,6 +66,7 @@ export default function SenderData() {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            {...register("phone", { required: true })} error={!!errors.phone} helperText={errors.phone ? 'El teléfono es obligatorio' : ''}
             label="Teléfono"
             value={phone}
             onChange={e => { setPhone(e.target.value); setValue("phone", e.target.value, { shouldValidate: true }) }}
@@ -68,6 +74,7 @@ export default function SenderData() {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            {...register("economicTwist", { required: true })} error={!!errors.economicTwist} helperText={errors.economicTwist ? 'El giro es obligatorio' : ''}
             select
             label="Giro"
             value={economicTwist}
@@ -80,6 +87,7 @@ export default function SenderData() {
         </Grid>
         <Grid item xs={6}>
           <TextField
+            {...register("economicActivity", { required: true })} error={!!errors.economicActivity} helperText={errors.economicActivity ? 'La actividad económica es obligatoria' : ''}
             select
             label="Actividad económica"
             value={economicActivity}
