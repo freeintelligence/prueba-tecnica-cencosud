@@ -16,6 +16,14 @@ a {
   text-decoration: none;
 }
 
+body {
+  background-color: #eee !important;
+}
+
 .card-with-margin {
   margin: 32px;
+}
+
+.MuiTextField-root {
+  width: 100%;
 }
