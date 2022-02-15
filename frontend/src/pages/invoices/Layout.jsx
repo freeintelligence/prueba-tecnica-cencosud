@@ -28,7 +28,7 @@ export default function Layout() {
         </AppBar>
       </Box>
       
-      <Container maxWidth="sm">
+      <Container maxWidth="md" className="card-with-margin">
         <Outlet />
       </Container>
     </React.Fragment>
