@@ -9,14 +9,14 @@ import PersonPinTwoToneIcon from '@mui/icons-material/PersonPinTwoTone';
 import { useState } from 'react';
 
 export default function SenderData() {
-  const [ businessName, setBusinessName ] = useState();
-  const [ address, setAddress ] = useState();
-  const [ commune, setCommune ] = useState();
-  const [ city, setCity ] = useState();
-  const [ email, setEmail ] = useState();
-  const [ phone, setPhone ] = useState();
-  const [ economicTwist, setEconomicTwist ] = useState();
-  const [ economicActivity, setEconomicActivity ] = useState();
+  const [ businessName, setBusinessName ] = useState('');
+  const [ address, setAddress ] = useState('');
+  const [ commune, setCommune ] = useState('');
+  const [ city, setCity ] = useState('');
+  const [ email, setEmail ] = useState('');
+  const [ phone, setPhone ] = useState('');
+  const [ economicTwist, setEconomicTwist ] = useState(1);
+  const [ economicActivity, setEconomicActivity ] = useState(1);
 
   const { register, setValue, formState: { errors } } = useFormContext();
 

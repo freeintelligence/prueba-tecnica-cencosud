@@ -8,12 +8,8 @@ import { useState } from 'react';
 import * as moment from 'moment';
 
 export default function Header() {
-  const [ broadcastDate, setBroadcastDate ] = useState();
-  const { register, setValue, formState: { errors } } = useFormContext({
-    default: {
-      broadcastDate: moment().format('DD-MM-YYYY'),
-    }
-  });
+  const [ broadcastDate, setBroadcastDate ] = useState(moment.now());
+  const { register, setValue, formState: { errors } } = useFormContext();
 
   return (
     <CardContent>

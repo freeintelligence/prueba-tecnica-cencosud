@@ -5,9 +5,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
 import { useForm, FormProvider } from "react-hook-form";
-import { useState } from 'react';
 import Header from './Create/Header';
 import SenderData from './Create/SenderData';
+import ReceiverData from './Create/ReceiverData';
 import './Create/index.css';
 
 export default function Create() {
@@ -30,6 +30,7 @@ export default function Create() {
         <Card variant="outlined">
           <Header></Header>
           <SenderData></SenderData>
+          <ReceiverData></ReceiverData>
 
           <CardActions style={{justifyContent: 'center'}}>
             <Button type="submit" size="medium" variant="outlined" color="primary">Enviar factura</Button>
