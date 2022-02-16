@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const { Invoice } = require('../models/invoice');
 const { body, validationResult, matchedData } = require('express-validator');
 const rutValidator = require('../validators/rutValidator');
 const { producer } = require('../kafka');
