@@ -18,8 +18,8 @@ import { economicActivityApi } from "../../api/economic-activity";
 import SimpleStoreDialog from './../../components/SimpleStoreDialog/SimpleStoreDialog';
 
 export default function Create() {
-  const [ transmitterEconomicTwistOpen, setTransmitterEconomicTwistOpen ] = useState(false);
-  const [ transmitterEconomicActivityOpen, setTransmitterEconomicActivityOpen ] = useState(false);
+  const [ economicTwistOpen, setEconomicTwistOpen ] = useState(false);
+  const [ economicActivityOpen, setEconomicActivityOpen ] = useState(false);
 
   const [ economicTwistList, setEconomicTwistList ] = useState([]);
   const [ economicActivityList, setEconomicActivityList ] = useState([]);
@@ -31,7 +31,7 @@ export default function Create() {
   }, []);
 
   const onCreateTransmitterEconomicTwist = (createdValue) => {
-    setTransmitterEconomicTwistOpen(false);
+    setEconomicTwistOpen(false);
 
     if (createdValue && createdValue.id) {
       setEconomicTwistList(oldArray => [createdValue, ...oldArray]);
@@ -40,7 +40,7 @@ export default function Create() {
   }
 
   const onCreateTransmitterEconomicActivity = (createdValue) => {
-    setTransmitterEconomicActivityOpen(false);
+    setEconomicActivityOpen(false);
 
     if (createdValue && createdValue.id) {
       setEconomicActivityList(oldArray => [createdValue, ...oldArray]);
@@ -79,13 +79,13 @@ export default function Create() {
         <Card variant="outlined">
           <div className="form-container">
             <Header></Header>
-            <EmitterData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openTransmitterEconomicTwist={(status) => setTransmitterEconomicTwistOpen(status)} openTransmitterEconomicActivity={(status) => setTransmitterEconomicActivityOpen(status)}></EmitterData>
-            <ReceiverData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openTransmitterEconomicTwist={(status) => setTransmitterEconomicTwistOpen(status)} openTransmitterEconomicActivity={(status) => setTransmitterEconomicActivityOpen(status)}></ReceiverData>
+            <EmitterData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openTransmitterEconomicTwist={(status) => setEconomicTwistOpen(status)} openTransmitterEconomicActivity={(status) => setEconomicActivityOpen(status)}></EmitterData>
+            <ReceiverData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openTransmitterEconomicTwist={(status) => setEconomicTwistOpen(status)} openTransmitterEconomicActivity={(status) => setEconomicActivityOpen(status)}></ReceiverData>
             <Products></Products>
           </div>
 
-          <SimpleStoreDialog title="Crear giro" content="Estás por crear un nuevo giro que estará disponible para próximas facturas." inputLabel="Nombre del giro" fieldName="name" open={transmitterEconomicTwistOpen} store={async (data) => await economicTwistApi.store(data)} onClose={createdValue => onCreateTransmitterEconomicTwist(createdValue)} />
-          <SimpleStoreDialog title="Crear actividad económica" content="Estás por crear una nueva actividad económica que estará disponible para próximas facturas." fieldName="name" inputLabel="Nombre de la actividad económica" open={transmitterEconomicActivityOpen} store={async (data) => await economicActivityApi.store(data)} onClose={createdValue => onCreateTransmitterEconomicActivity(createdValue)} />
+          <SimpleStoreDialog title="Crear giro" content="Estás por crear un nuevo giro que estará disponible para próximas facturas." inputLabel="Nombre del giro" fieldName="name" open={economicTwistOpen} store={async (data) => await economicTwistApi.store(data)} onClose={createdValue => onCreateTransmitterEconomicTwist(createdValue)} />
+          <SimpleStoreDialog title="Crear actividad económica" content="Estás por crear una nueva actividad económica que estará disponible para próximas facturas." fieldName="name" inputLabel="Nombre de la actividad económica" open={economicActivityOpen} store={async (data) => await economicActivityApi.store(data)} onClose={createdValue => onCreateTransmitterEconomicActivity(createdValue)} />
 
           <CardActions className="action-buttons">
             <Button type="submit" size="medium" variant="outlined" color="primary">Enviar factura</Button>
