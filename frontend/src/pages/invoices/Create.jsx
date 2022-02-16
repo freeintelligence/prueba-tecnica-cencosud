@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
 import { useForm, FormProvider } from "react-hook-form";
 import Header from './Create/Header';
-import SenderData from './Create/SenderData';
+import EmitterData from './Create/EmitterData';
 import ReceiverData from './Create/ReceiverData';
 import './Create/index.css';
 
@@ -29,7 +29,7 @@ export default function Create() {
         </AppBar>
         <Card variant="outlined">
           <Header></Header>
-          <SenderData></SenderData>
+          <EmitterData></EmitterData>
           <ReceiverData></ReceiverData>
 
           <CardActions style={{justifyContent: 'center'}}>

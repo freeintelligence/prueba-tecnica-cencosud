@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import PersonPinTwoToneIcon from '@mui/icons-material/PersonPinTwoTone';
 import { useState } from 'react';
 
-export default function SenderData() {
+export default function EmitterData() {
   const [ transmitterBusinessName, setTransmitterBusinessName ] = useState('');
   const [ transmitterAddress, setTransmitterAddress ] = useState('');
   const [ transmitterCommune, setTransmitterCommune ] = useState('');
