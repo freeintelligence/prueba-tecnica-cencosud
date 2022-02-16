@@ -174,7 +174,7 @@ export default function EmitterData() {
             {economicTwistList.map((economicTwist, index) => <MenuItem key={index} value={economicTwist.id}>{economicTwist.name}</MenuItem>)}
           </TextField>
 
-          <SimpleStoreDialog title="Crear giro" content="Estás por crear un nuevo giro que estará disponible para próximas facturas." inputLabel="Nombre del giro" fieldName="name" open={transmitterEconomicTwistOpen} onClose={createdValue => onCreateTransmitterEconomicTwist(createdValue)} />
+          <SimpleStoreDialog title="Crear giro" content="Estás por crear un nuevo giro que estará disponible para próximas facturas." inputLabel="Nombre del giro" fieldName="name" open={transmitterEconomicTwistOpen} store={async (data) => await economicTwistApi.store(data)} onClose={createdValue => onCreateTransmitterEconomicTwist(createdValue)} />
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -197,7 +197,7 @@ export default function EmitterData() {
             {economicActivityList.map((economicActivity, index) => <MenuItem key={index} value={economicActivity.id}>{economicActivity.name}</MenuItem>)}
           </TextField>
 
-          <SimpleStoreDialog title="Crear actividad económica" content="Estás por crear una nueva actividad económica que estará disponible para próximas facturas." fieldName="name" inputLabel="Nombre de la actividad económica" open={transmitterEconomicActivityOpen} onClose={createdValue => onCreateTransmitterEconomicActivity(createdValue)} />
+          <SimpleStoreDialog title="Crear actividad económica" content="Estás por crear una nueva actividad económica que estará disponible para próximas facturas." fieldName="name" inputLabel="Nombre de la actividad económica" open={transmitterEconomicActivityOpen} store={async (data) => await economicActivityApi.store(data)} onClose={createdValue => onCreateTransmitterEconomicActivity(createdValue)} />
         </Grid>
       </Grid>
     </CardContent>
