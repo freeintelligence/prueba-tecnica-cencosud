@@ -12,7 +12,7 @@ import Products from './Create/Products';
 import './Create/index.css';
 
 export default function Create() {
-  const methods = useForm();
+  const methods = useForm({ mode: 'all' });
 
   const onSubmit = (data) => {
     console.log('submit', data);
@@ -36,7 +36,7 @@ export default function Create() {
 
           <CardActions style={{justifyContent: 'center'}}>
             <Button type="submit" size="medium" variant="outlined" color="primary">Enviar factura</Button>
-            <Button size="medium" variant="outlined" color="warning">Borrar campos</Button>
+            <Button size="medium" variant="outlined" color="warning">Limpiar</Button>
           </CardActions>
         </Card>
       </form>
