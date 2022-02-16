@@ -8,6 +8,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import Header from './Create/Header';
 import EmitterData from './Create/EmitterData';
 import ReceiverData from './Create/ReceiverData';
+import Products from './Create/Products';
 import './Create/index.css';
 
 export default function Create() {
@@ -31,6 +32,7 @@ export default function Create() {
           <Header></Header>
           <EmitterData></EmitterData>
           <ReceiverData></ReceiverData>
+          <Products></Products>
 
           <CardActions style={{justifyContent: 'center'}}>
             <Button type="submit" size="medium" variant="outlined" color="primary">Enviar factura</Button>
