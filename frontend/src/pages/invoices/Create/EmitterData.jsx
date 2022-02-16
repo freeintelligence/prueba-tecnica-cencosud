@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import CardHeader from '@mui/material/CardHeader';
 import TextField from '@mui/material/TextField';
@@ -15,8 +15,13 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useState } from 'react';
 import SimpleStoreDialog from './../../../components/SimpleStoreDialog/SimpleStoreDialog';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { economicTwistApi } from "../../../api/economic-twist";
+import { economicActivityApi } from "../../../api/economic-activity";
 
 export default function EmitterData() {
+  const [ economicTwistList, setEconomicTwistList ] = useState([]);
+  const [ economicActivityList, setEconomicActivityList ] = useState([]);
+
   const [ transmitterEconomicTwistOpen, setTransmitterEconomicTwistOpen ] = useState(false);
   const [ transmitterEconomicActivityOpen, setTransmitterEconomicActivityOpen ] = useState(false);
 
@@ -30,6 +35,19 @@ export default function EmitterData() {
   const [ transmitterEconomicActivity, setTransmitterEconomicActivity ] = useState('');
 
   const { register, setValue, formState: { errors } } = useFormContext();
+
+  useEffect(() => {
+    loadNeedsData();
+  }, []);
+
+  const loadNeedsData = async () => {
+    try {
+      setEconomicTwistList(await economicTwistApi.getAll());
+      setEconomicActivityList(await economicActivityApi.getAll());
+    } catch (err) {
+
+    }
+  }
 
   const onCreateTransmitterEconomicTwist = (createdValue) => {
     setTransmitterEconomicTwistOpen(false);
@@ -152,9 +170,8 @@ export default function EmitterData() {
             }}
           >
             <MenuItem value="create"><ListItemIcon><AddCircleOutlineIcon fontSize="small" /></ListItemIcon> Crear giro</MenuItem>
-            <MenuItem value={1}>
-              Giro económico #1
-            </MenuItem>
+
+            {economicTwistList.map((economicTwist, index) => <MenuItem key={index} value={economicTwist.id}>{economicTwist.name}</MenuItem>)}
           </TextField>
 
           <SimpleStoreDialog title="Crear giro" content="Estás por crear un nuevo giro que estará disponible para próximas facturas." inputLabel="Nombre del giro" fieldName="name" open={transmitterEconomicTwistOpen} onClose={createdValue => onCreateTransmitterEconomicTwist(createdValue)} />
@@ -176,9 +193,8 @@ export default function EmitterData() {
             }}
           >
             <MenuItem value="create"><ListItemIcon><AddCircleOutlineIcon fontSize="small" /></ListItemIcon> Crear actividad económica</MenuItem>
-            <MenuItem value={1}>
-              Actividad económica #1
-            </MenuItem>
+            
+            {economicActivityList.map((economicActivity, index) => <MenuItem key={index} value={economicActivity.id}>{economicActivity.name}</MenuItem>)}
           </TextField>
 
           <SimpleStoreDialog title="Crear actividad económica" content="Estás por crear una nueva actividad económica que estará disponible para próximas facturas." fieldName="name" inputLabel="Nombre de la actividad económica" open={transmitterEconomicActivityOpen} onClose={createdValue => onCreateTransmitterEconomicActivity(createdValue)} />
