@@ -1,9 +1,9 @@
 var express = require('express');
-const { EconomicTwist } = require('../models/economicTwist');
+const { EconomicActivity } = require('../models/economicActivity');
 var router = express.Router();
 
 router.get('/', async function(req, res, next) {
-  const documents = await EconomicTwist.find();
+  const documents = await EconomicActivity.find();
   res.json(documents);
 });
 
