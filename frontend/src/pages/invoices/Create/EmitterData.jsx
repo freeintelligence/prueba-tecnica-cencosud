@@ -31,7 +31,7 @@ export default function EmitterData() {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
-            {...register("transmitterBusinessName", { required: true })} error={!!errors.transmitterBusinessName} helperText={errors.transmitterBusinessName ? 'La razón social es obligatoria' : ''}
+            {...register("transmitterBusinessName", { required: true, maxLength: 1024 })} error={!!errors.transmitterBusinessName} helperText={errors.transmitterBusinessName ? 'La razón social es inválida' : ''}
             label="Razón social"
             required
             value={transmitterBusinessName}
@@ -81,7 +81,7 @@ export default function EmitterData() {
         </Grid>
         <Grid item xs={6}>
           <TextField
-            {...register("transmitterEmail", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })} error={!!errors.transmitterEmail} helperText={errors.transmitterEmail ? 'El correo electrónico es invalido' : ''}
+            {...register("transmitterEmail", { required: true, maxLength: 1024, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })} error={!!errors.transmitterEmail} helperText={errors.transmitterEmail ? 'El correo electrónico es invalido' : ''}
             label="Correo electrónico"
             required
             value={transmitterEmail}
