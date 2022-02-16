@@ -19,8 +19,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useEffect } from "react";
+import { useSnackbar } from 'notistack';
 
 export default function ReceiverData() {
+  const { enqueueSnackbar } = useSnackbar();
   const { register, control, setValue, getValues, formState: { errors },  } = useFormContext();
   const { fields, prepend, remove } = useFieldArray({ name: 'products', control });
 
@@ -29,6 +31,11 @@ export default function ReceiverData() {
   }
 
   const removeProduct = (index) => {
+    if (fields.length === 1) {
+      enqueueSnackbar('Debe haber como mínimo un producto!', { variant: 'error' });
+      return;
+    }
+
     remove(index);
   }
 
@@ -65,9 +72,9 @@ export default function ReceiverData() {
             {fields.map((product, index) => <TableRow key={product.id}>
               <TableCell width={"30%"}>
                 <TextField
-                  {...register(`products.${index}.name`, { required: true })}
+                  {...register(`products.${index}.name`, { required: true, maxLength: 1024 })}
                   error={!!errors?.products?.[index]?.name}
-                  helperText={errors?.products?.[index]?.name ? 'El nombre es obligatorio' : ''}
+                  helperText={errors?.products?.[index]?.name ? 'El nombre es inválido' : ''}
                   onChange={e => setProductValue(index, 'name', e.target.value)}
                   label="Nombre producto"
                   size="small"
@@ -77,7 +84,7 @@ export default function ReceiverData() {
                 <TextField
                   {...register(`products.${index}.amount`, { required: true, min: 1, max: Number.MAX_SAFE_INTEGER })}
                   error={!!errors?.products?.[index]?.amount}
-                  helperText={errors?.products?.[index]?.amount ? 'La cantidad es obligatoria' : ''}
+                  helperText={errors?.products?.[index]?.amount ? 'La cantidad es inválida' : ''}
                   onChange={e => setProductValue(index, 'amount', Math.round(e.target.value ?? 0))}
                   label="Cantidad"
                   size="small"
@@ -88,7 +95,7 @@ export default function ReceiverData() {
                   <TextField
                     {...register(`products.${index}.price`, { required: true, min: 1, max: Number.MAX_SAFE_INTEGER })}
                     error={!!errors?.products?.[index]?.price}
-                    helperText={errors?.products?.[index]?.price ? 'El precio es obligatorio' : ''}
+                    helperText={errors?.products?.[index]?.price ? 'El precio es inválido' : ''}
                     onChange={e => setProductValue(index, 'price', Math.round(e.target.value ?? 0))}
                     label="Precio"
                     size="small"
