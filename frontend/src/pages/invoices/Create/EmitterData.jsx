@@ -53,7 +53,9 @@ export default function EmitterData() {
     setTransmitterEconomicTwistOpen(false);
 
     if (createdValue && createdValue.id) {
-      setValue("transmitterEconomicTwist", createdValue.id);
+      setEconomicTwistList(oldArray => [createdValue, ...oldArray]);
+      setTransmitterEconomicTwist(createdValue.id);
+      setValue("transmitterEconomicTwist", createdValue.id, { shouldValidate: true });
     }
   }
 
@@ -61,7 +63,9 @@ export default function EmitterData() {
     setTransmitterEconomicActivityOpen(false);
 
     if (createdValue && createdValue.id) {
-      setValue("transmitterEconomicActivity", createdValue.id);
+      setEconomicActivityList(oldArray => [createdValue, ...oldArray]);
+      setTransmitterEconomicActivity(createdValue.id);
+      setValue("transmitterEconomicActivity", createdValue.id, { shouldValidate: true });
     }
   }
 
