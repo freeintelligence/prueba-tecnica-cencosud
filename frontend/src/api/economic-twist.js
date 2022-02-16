@@ -3,7 +3,7 @@ import { api } from "./api";
 export const economicTwistApi = {
 
   getAll: async () => {
-    const r = await fetch(api.url('/comments'));
+    const r = await fetch(api.url('/economic-twists'));
     const json = await r.json();
 
     if (!r.ok) {
@@ -14,7 +14,7 @@ export const economicTwistApi = {
   },
 
   store: async (data) => {
-    const r = await fetch(api.url('/comments'), {
+    const r = await fetch(api.url('/economic-twists'), {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
