@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import CardHeader from '@mui/material/CardHeader';
 import TextField from '@mui/material/TextField';
@@ -8,8 +8,10 @@ import Grid from '@mui/material/Grid';
 import AdminPanelSettingsTwoToneIcon from '@mui/icons-material/AdminPanelSettingsTwoTone';
 import { useState } from 'react';
 import { validate, format } from 'rut.js';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-export default function ReceiverData() {
+export default function ReceiverData(props) {
   const [ receiverRut, setReceiverRut ] = useState('');
   const [ receiverBusinessName, setReceiverBusinessName ] = useState('');
   const [ receiverAddress, setReceiverAddress ] = useState('');
@@ -17,10 +19,20 @@ export default function ReceiverData() {
   const [ receiverCity, setReceiverCity ] = useState('');
   const [ receiverContactName, setReceiverContactName ] = useState('');
   const [ receiverContactRut, setReceiverContactRut ] = useState('');
-  const [ receiverEconomicTwist, setReceiverEconomicTwist ] = useState(1);
+  const [ receiverEconomicTwist, setReceiverEconomicTwist ] = useState('');
   const [ receiverContactEmail, setReceiverContactEmail ] = useState('');
 
-  const { register, setValue, formState: { errors } } = useFormContext();
+  const { register, setValue, watch, formState: { errors } } = useFormContext();
+
+  const receiverEconomicTwistWatch = watch('receiverEconomicTwist', '');
+
+  useEffect(() => {
+    setReceiverEconomicTwist(receiverEconomicTwistWatch === 'create' ? '' : receiverEconomicTwistWatch);
+
+    if (receiverEconomicTwistWatch === 'create') {
+      return props.openEconomicTwist(true);
+    }
+  }, [receiverEconomicTwistWatch]);
 
   return (<>
     <CardHeader avatar={<AdminPanelSettingsTwoToneIcon fontSize="large" color="secondary" />} title="DATOS RECEPTOR" subheader="Emisión de factura" />
@@ -96,11 +108,10 @@ export default function ReceiverData() {
             label="Giro"
             required
             value={receiverEconomicTwist}
-            onChange={e => { setReceiverEconomicTwist(e.target.value); setValue("receiverEconomicTwist", e.target.value) }}
           >
-            <MenuItem value={1}>
-              Giro económico #1
-            </MenuItem>
+            <MenuItem value="create"><ListItemIcon><AddCircleOutlineIcon fontSize="small" /></ListItemIcon> Crear giro</MenuItem>
+
+            {props.economicTwistList.map((economicTwist, index) => <MenuItem key={index} value={economicTwist.id}>{economicTwist.name}</MenuItem>)}
           </TextField>
         </Grid>
         <Grid item xs={6}>
