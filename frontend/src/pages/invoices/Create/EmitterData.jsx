@@ -22,19 +22,25 @@ export default function EmitterData(props) {
   const [ transmitterCity, setTransmitterCity ] = useState('');
   const [ transmitterEmail, setTransmitterEmail ] = useState('');
   const [ transmitterPhone, setTransmitterPhone ] = useState('');
+  const [ transmitterEconomicTwist, setTransmitterEconomicTwist ] = useState('');
   const [ transmitterEconomicActivity, setTransmitterEconomicActivity ] = useState('');
 
   const { register, setValue, watch, formState: { errors } } = useFormContext();
 
   const transmitterEconomicActivityWatch = watch('transmitterEconomicActivity', '');
+  const transmitterEconomicTwistWatch = watch('transmitterEconomicTwist', '');
 
   useEffect(() => {
     setTransmitterEconomicActivity(transmitterEconomicActivityWatch === 'create' ? '' : transmitterEconomicActivityWatch);
+    setTransmitterEconomicTwist(transmitterEconomicTwistWatch === 'create' ? '' : transmitterEconomicTwistWatch);
 
     if (transmitterEconomicActivityWatch === 'create') {
-      return props.openTransmitterEconomicActivity(true);
+      return props.openEconomicActivity(true);
     }
-  }, [transmitterEconomicActivityWatch]);
+    if (transmitterEconomicTwistWatch === 'create') {
+      return props.openEconomicTwist(true);
+    }
+  }, [transmitterEconomicActivityWatch, transmitterEconomicTwistWatch]);
 
   return (<>
     <CardHeader avatar={<PersonPinTwoToneIcon fontSize="large" color="secondary" />} title="DATOS EMISOR" subheader="Emisión de factura" />
@@ -130,14 +136,7 @@ export default function EmitterData(props) {
             select
             label="Giro"
             required
-            defaultValue=""
-            onChange={e => {
-              if (e.target.value === 'create') {
-                return props.openTransmitterEconomicTwist(true);
-              }
-
-              setValue("transmitterEconomicTwist", e.target.value);
-            }}
+            value={transmitterEconomicTwist}
           >
             <MenuItem value="create"><ListItemIcon><AddCircleOutlineIcon fontSize="small" /></ListItemIcon> Crear giro</MenuItem>
 

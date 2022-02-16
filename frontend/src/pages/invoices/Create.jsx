@@ -79,8 +79,8 @@ export default function Create() {
         <Card variant="outlined">
           <div className="form-container">
             <Header></Header>
-            <EmitterData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openTransmitterEconomicTwist={(status) => setEconomicTwistOpen(status)} openTransmitterEconomicActivity={(status) => setEconomicActivityOpen(status)}></EmitterData>
-            <ReceiverData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openTransmitterEconomicTwist={(status) => setEconomicTwistOpen(status)} openTransmitterEconomicActivity={(status) => setEconomicActivityOpen(status)}></ReceiverData>
+            <EmitterData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openEconomicTwist={(status) => setEconomicTwistOpen(status)} openEconomicActivity={(status) => setEconomicActivityOpen(status)}></EmitterData>
+            <ReceiverData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openEconomicTwist={(status) => setEconomicTwistOpen(status)} openEconomicActivity={(status) => setEconomicActivityOpen(status)}></ReceiverData>
             <Products></Products>
           </div>
 
