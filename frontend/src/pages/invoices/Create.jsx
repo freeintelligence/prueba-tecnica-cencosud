@@ -40,6 +40,35 @@ export default function Create() {
     loadNeedsData();
   }, []);
 
+  const resetForm = () => {
+    setLoading(false);
+    setError(null);
+    setSuccess(false);
+    setEconomicTwistOpen(false);
+    setEconomicTwistOpenFromComponent(undefined);
+    setEconomicActivityOpen(false);
+
+    methods.reset({
+      receiverRut: '',
+      receiverBusinessName: '',
+      receiverAddress: '',
+      receiverCommune: '',
+      receiverCity: '',
+      receiverContactName: '',
+      receiverContactRut: '',
+      receiverEconomicTwist: '',
+      receiverContactEmail: '',
+      transmitterBusinessName: '',
+      transmitterAddress: '',
+      transmitterCommune: '',
+      transmitterCity: '',
+      transmitterEmail: '',
+      transmitterPhone: '',
+      transmitterEconomicTwist: '',
+      transmitterEconomicActivity: '',
+    });
+  }
+
   const onCreateEconomicTwist = (createdValue) => {
     setEconomicTwistOpen(false);
 
@@ -86,7 +115,7 @@ export default function Create() {
 
     try {
       const values = methods.getValues();
-      await invoicesApi.store(values);
+      //await invoicesApi.store(values);
 
       setSuccess(true);
     } catch (err) {
@@ -122,6 +151,10 @@ export default function Create() {
                 <Alert severity="success">La factura fue emitida exitosamente! Te enviaremos un correo para confirmar.</Alert>
               </Stack>
             </div>
+
+            <CardActions className="action-buttons">
+              <Button onClick={() => resetForm()} size="medium" variant="contained" color="primary">Crear otra factura</Button>
+            </CardActions>
           </>) : null}
 
           {error ? (<>
@@ -134,7 +167,7 @@ export default function Create() {
             <CardActions className="action-buttons">
               <Button onClick={() => loadNeedsData()} size="medium" variant="contained" color="error">Reintentar</Button>
             </CardActions>
-          </>) : (<>
+          </>) : !success ? (<>
             <div className="form-container">
               <Header></Header>
               <EmitterData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openEconomicTwist={(status, from_component) => { setEconomicTwistOpen(status); setEconomicTwistOpenFromComponent(from_component); }} openEconomicActivity={(status) => setEconomicActivityOpen(status)}></EmitterData>
@@ -147,9 +180,9 @@ export default function Create() {
 
             <CardActions className="action-buttons">
               <Button type="submit" size="medium" variant="outlined" color="primary">Enviar factura</Button>
-              <Button size="medium" variant="text">Limpiar campos</Button>
+              <Button size="medium" variant="text" onClick={() => resetForm()}>Limpiar campos</Button>
             </CardActions>
-          </>)}
+          </>) : null}
 
         </Card>
       </form>
