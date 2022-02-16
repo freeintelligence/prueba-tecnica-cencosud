@@ -38,7 +38,7 @@ export default function EmitterData(props) {
       return props.openEconomicActivity(true);
     }
     if (transmitterEconomicTwistWatch === 'create') {
-      return props.openEconomicTwist(true);
+      return props.openEconomicTwist(true, 'transmitterEconomicTwist');
     }
   }, [transmitterEconomicActivityWatch, transmitterEconomicTwistWatch]);
 

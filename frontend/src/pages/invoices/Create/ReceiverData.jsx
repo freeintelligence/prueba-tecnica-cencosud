@@ -30,7 +30,7 @@ export default function ReceiverData(props) {
     setReceiverEconomicTwist(receiverEconomicTwistWatch === 'create' ? '' : receiverEconomicTwistWatch);
 
     if (receiverEconomicTwistWatch === 'create') {
-      return props.openEconomicTwist(true);
+      return props.openEconomicTwist(true, 'receiverEconomicTwist');
     }
   }, [receiverEconomicTwistWatch]);
 

@@ -19,6 +19,7 @@ import SimpleStoreDialog from './../../components/SimpleStoreDialog/SimpleStoreD
 
 export default function Create() {
   const [ economicTwistOpen, setEconomicTwistOpen ] = useState(false);
+  const [ economicTwistOpenFromComponent, setEconomicTwistOpenFromComponent ] = useState();
   const [ economicActivityOpen, setEconomicActivityOpen ] = useState(false);
 
   const [ economicTwistList, setEconomicTwistList ] = useState([]);
@@ -30,16 +31,16 @@ export default function Create() {
     loadNeedsData();
   }, []);
 
-  const onCreateTransmitterEconomicTwist = (createdValue) => {
+  const onCreateEconomicTwist = (createdValue) => {
     setEconomicTwistOpen(false);
 
     if (createdValue && createdValue.id) {
       setEconomicTwistList(oldArray => [createdValue, ...oldArray]);
-      methods.setValue("transmitterEconomicTwist", createdValue.id, { shouldValidate: true });
+      methods.setValue(economicTwistOpenFromComponent, createdValue.id, { shouldValidate: true });
     }
   }
 
-  const onCreateTransmitterEconomicActivity = (createdValue) => {
+  const onCreateEconomicActivity = (createdValue) => {
     setEconomicActivityOpen(false);
 
     if (createdValue && createdValue.id) {
@@ -79,13 +80,13 @@ export default function Create() {
         <Card variant="outlined">
           <div className="form-container">
             <Header></Header>
-            <EmitterData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openEconomicTwist={(status) => setEconomicTwistOpen(status)} openEconomicActivity={(status) => setEconomicActivityOpen(status)}></EmitterData>
-            <ReceiverData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openEconomicTwist={(status) => setEconomicTwistOpen(status)} openEconomicActivity={(status) => setEconomicActivityOpen(status)}></ReceiverData>
+            <EmitterData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openEconomicTwist={(status, from_component) => { setEconomicTwistOpen(status); setEconomicTwistOpenFromComponent(from_component); }} openEconomicActivity={(status) => setEconomicActivityOpen(status)}></EmitterData>
+            <ReceiverData economicTwistList={economicTwistList} economicActivityList={economicActivityList} openEconomicTwist={(status, from_component) => { setEconomicTwistOpen(status); setEconomicTwistOpenFromComponent(from_component); }} openEconomicActivity={(status) => setEconomicActivityOpen(status)}></ReceiverData>
             <Products></Products>
           </div>
 
-          <SimpleStoreDialog title="Crear giro" content="Estás por crear un nuevo giro que estará disponible para próximas facturas." inputLabel="Nombre del giro" fieldName="name" open={economicTwistOpen} store={async (data) => await economicTwistApi.store(data)} onClose={createdValue => onCreateTransmitterEconomicTwist(createdValue)} />
-          <SimpleStoreDialog title="Crear actividad económica" content="Estás por crear una nueva actividad económica que estará disponible para próximas facturas." fieldName="name" inputLabel="Nombre de la actividad económica" open={economicActivityOpen} store={async (data) => await economicActivityApi.store(data)} onClose={createdValue => onCreateTransmitterEconomicActivity(createdValue)} />
+          <SimpleStoreDialog title="Crear giro" content="Estás por crear un nuevo giro que estará disponible para próximas facturas." inputLabel="Nombre del giro" fieldName="name" open={economicTwistOpen} store={async (data) => await economicTwistApi.store(data)} onClose={createdValue => onCreateEconomicTwist(createdValue)} />
+          <SimpleStoreDialog title="Crear actividad económica" content="Estás por crear una nueva actividad económica que estará disponible para próximas facturas." fieldName="name" inputLabel="Nombre de la actividad económica" open={economicActivityOpen} store={async (data) => await economicActivityApi.store(data)} onClose={createdValue => onCreateEconomicActivity(createdValue)} />
 
           <CardActions className="action-buttons">
             <Button type="submit" size="medium" variant="outlined" color="primary">Enviar factura</Button>
