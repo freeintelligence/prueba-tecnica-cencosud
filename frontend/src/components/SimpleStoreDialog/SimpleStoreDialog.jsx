@@ -67,6 +67,7 @@ export default function SimpleStoreDialog(props) {
           autoComplete="off"
           variant="standard"
           disabled={isSubmitting}
+          onKeyDown={e => e.key === 'Enter' ? handleSubmit(onSubmit)(e) : null}
         />
       </DialogContent>
       <DialogActions>
