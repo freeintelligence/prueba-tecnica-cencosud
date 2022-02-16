@@ -14,7 +14,7 @@ export default function SimpleStoreDialog(props) {
   const [ loadingState, setLoadingState ] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
-  const { register, setValue, handleSubmit, getValues, formState: { errors, isSubmitting } } = useForm();
+  const { register, setValue, handleSubmit, reset, getValues, formState: { errors, isSubmitting } } = useForm();
 
   const handleClose = (value, _event, reason) => {
     if (reason === 'backdropClick') {
@@ -35,6 +35,7 @@ export default function SimpleStoreDialog(props) {
       const r = await props.store(getValues());
 
       handleClose(r);
+      reset({ [props.fieldName]: '' });
 
       enqueueSnackbar('Recurso creado exitosamente!', { variant: 'success' });
     } catch (err) {
@@ -60,7 +61,6 @@ export default function SimpleStoreDialog(props) {
           autoFocus
           margin="dense"
           label={props.inputLabel}
-          onChange={e => setValue(props.fieldName, e.target.value, { shouldValidate: true, shouldDirty: true, shouldTouch: true })}
           type="text"
           fullWidth
           noValidate
