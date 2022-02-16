@@ -4,6 +4,7 @@ var logger = require('morgan');
 var cors = require('cors');
 require('dotenv').config();
 require('./database');
+require('./kafka');
 
 var economicTwistsRouter = require('./routes/economic-twists');
 var economicActivitiesRouter = require('./routes/economic-activities');

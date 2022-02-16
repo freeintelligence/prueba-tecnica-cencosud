@@ -3,6 +3,7 @@ var router = express.Router();
 const { Invoice } = require('../models/invoice');
 const { body, validationResult, matchedData } = require('express-validator');
 const rutValidator = require('../validators/rutValidator');
+const { producer } = require('../kafka');
 
 router.post('/',
   /** Validate date */
@@ -32,19 +33,21 @@ router.post('/',
   body('products.*.price').toInt().isFloat({ min: 1, max: Number.MAX_SAFE_INTEGER }),
   async function(req, res) {
   const errors = validationResult(req);
-
-  console.log('body', req.body);
-  console.log('sanitized', matchedData(req));
-
-  return res.status(404).json({});
+  const data = matchedData(req);
 
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
 
-  const created = await Invoice.create({});
+  try {
+    await producer.send({ topic: 'invoices', messages: [ { value: JSON.stringify(data) } ] });
+  } catch (err) {
+    return res.status(500).json({ message: 'Service Unavailable' });
+  }
 
-  return res.json(created);
+  //const created = await Invoice.create({});
+  //return res.json(created);
+  return res.status(404).json({});
 });
 
 module.exports = router;
