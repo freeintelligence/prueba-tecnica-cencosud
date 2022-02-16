@@ -4,6 +4,7 @@ import CardHeader from '@mui/material/CardHeader';
 import TextField from '@mui/material/TextField';
 import CardContent from '@mui/material/CardContent';
 import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import Grid from '@mui/material/Grid';
 import PersonPinTwoToneIcon from '@mui/icons-material/PersonPinTwoTone';
 import BadgeIcon from '@mui/icons-material/Badge';
@@ -12,18 +13,39 @@ import MapIcon from '@mui/icons-material/Map';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useState } from 'react';
+import SimpleStoreDialog from './../../../components/SimpleStoreDialog/SimpleStoreDialog';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 export default function EmitterData() {
+  const [ transmitterEconomicTwistOpen, setTransmitterEconomicTwistOpen ] = useState(false);
+  const [ transmitterEconomicActivityOpen, setTransmitterEconomicActivityOpen ] = useState(false);
+
   const [ transmitterBusinessName, setTransmitterBusinessName ] = useState('');
   const [ transmitterAddress, setTransmitterAddress ] = useState('');
   const [ transmitterCommune, setTransmitterCommune ] = useState('');
   const [ transmitterCity, setTransmitterCity ] = useState('');
   const [ transmitterEmail, setTransmitterEmail ] = useState('');
   const [ transmitterPhone, setTransmitterPhone ] = useState('');
-  const [ transmitterEconomicTwist, setTransmitterEconomicTwist ] = useState(1);
-  const [ transmitterEconomicActivity, setTransmitterEconomicActivity ] = useState(1);
+  const [ transmitterEconomicTwist, setTransmitterEconomicTwist ] = useState('');
+  const [ transmitterEconomicActivity, setTransmitterEconomicActivity ] = useState('');
 
   const { register, setValue, formState: { errors } } = useFormContext();
+
+  const onCreateTransmitterEconomicTwist = (createdValue) => {
+    setTransmitterEconomicTwistOpen(false);
+
+    if (createdValue && createdValue.id) {
+      setValue("transmitterEconomicTwist", createdValue.id);
+    }
+  }
+
+  const onCreateTransmitterEconomicActivity = (createdValue) => {
+    setTransmitterEconomicActivityOpen(false);
+
+    if (createdValue && createdValue.id) {
+      setValue("transmitterEconomicActivity", createdValue.id);
+    }
+  }
 
   return (<>
     <CardHeader avatar={<PersonPinTwoToneIcon fontSize="large" color="secondary" />} title="DATOS EMISOR" subheader="Emisión de factura" />
@@ -120,12 +142,22 @@ export default function EmitterData() {
             label="Giro"
             required
             value={transmitterEconomicTwist}
-            onChange={e => { setTransmitterEconomicTwist(e.target.value); setValue("transmitterEconomicTwist", e.target.value) }}
+            onChange={e => {
+              if (e.target.value === 'create') {
+                return setTransmitterEconomicTwistOpen(true);
+              }
+
+              setTransmitterEconomicTwist(e.target.value);
+              setValue("transmitterEconomicTwist", e.target.value);
+            }}
           >
+            <MenuItem value="create"><ListItemIcon><AddCircleOutlineIcon fontSize="small" /></ListItemIcon> Crear giro</MenuItem>
             <MenuItem value={1}>
               Giro económico #1
             </MenuItem>
           </TextField>
+
+          <SimpleStoreDialog title="Crear giro" content="Estás por crear un nuevo giro que estará disponible para próximas facturas." inputLabel="Nombre del giro" fieldName="name" open={transmitterEconomicTwistOpen} onClose={createdValue => onCreateTransmitterEconomicTwist(createdValue)} />
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -134,12 +166,22 @@ export default function EmitterData() {
             label="Actividad económica"
             required
             value={transmitterEconomicActivity}
-            onChange={e => { setTransmitterEconomicActivity(e.target.value); setValue("transmitterEconomicActivity", e.target.value) }}
+            onChange={e => {
+              if (e.target.value === 'create') {
+                return setTransmitterEconomicActivityOpen(true);
+              }
+
+              setTransmitterEconomicActivity(e.target.value);
+              setValue("transmitterEconomicActivity", e.target.value)
+            }}
           >
+            <MenuItem value="create"><ListItemIcon><AddCircleOutlineIcon fontSize="small" /></ListItemIcon> Crear actividad económica</MenuItem>
             <MenuItem value={1}>
               Actividad económica #1
             </MenuItem>
           </TextField>
+
+          <SimpleStoreDialog title="Crear actividad económica" content="Estás por crear una nueva actividad económica que estará disponible para próximas facturas." fieldName="name" inputLabel="Nombre de la actividad económica" open={transmitterEconomicActivityOpen} onClose={createdValue => onCreateTransmitterEconomicActivity(createdValue)} />
         </Grid>
       </Grid>
     </CardContent>
