@@ -116,6 +116,14 @@ export default function Create() {
           </Toolbar>
         </AppBar>
         <Card variant="outlined">
+          {success ? (<>
+            <div className="form-container">
+              <Stack sx={{ width: '100%' }} spacing={2}>
+                <Alert severity="success">La factura fue emitida exitosamente! Te enviaremos un correo para confirmar.</Alert>
+              </Stack>
+            </div>
+          </>) : null}
+
           {error ? (<>
             <div className="form-container">
               <Stack sx={{ width: '100%' }} spacing={2}>
