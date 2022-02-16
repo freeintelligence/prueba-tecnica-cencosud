@@ -74,7 +74,7 @@ export default function ReceiverData() {
             <TableRow>
               <TableCell>Nombre producto</TableCell>
               <TableCell align="center">Cantidad</TableCell>
-              <TableCell align="center">Precio</TableCell>
+              <TableCell align="center">Precio unidad</TableCell>
               <TableCell align="center">Subtotal</TableCell>
               <TableCell align="right">
                 <Button onClick={() => addProduct()} variant="outlined" endIcon={<AddCircleIcon />}>Nuevo</Button>
@@ -110,7 +110,7 @@ export default function ReceiverData() {
                   error={!!errors?.products?.[index]?.price}
                   helperText={errors?.products?.[index]?.price ? 'El precio es inválido' : ''}
                   onChange={e => setProductValue(index, 'price', Math.round(e.target.value ?? 0))}
-                  label="Precio"
+                  label="Precio unidad"
                   size="small"
                   type="number"
                 />
