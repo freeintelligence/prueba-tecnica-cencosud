@@ -115,7 +115,7 @@ export default function Create() {
 
     try {
       const values = methods.getValues();
-      //await invoicesApi.store(values);
+      await invoicesApi.store(values);
 
       setSuccess(true);
     } catch (err) {

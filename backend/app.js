@@ -7,6 +7,7 @@ require('./database');
 
 var economicTwistsRouter = require('./routes/economic-twists');
 var economicActivitiesRouter = require('./routes/economic-activities');
+var invoicesRouter = require('./routes/invoices');
 
 var app = express();
 
@@ -18,5 +19,6 @@ app.use(cookieParser());
 
 app.use('/economic-twists', economicTwistsRouter);
 app.use('/economic-activities', economicActivitiesRouter);
+app.use('/invoices', invoicesRouter);
 
 module.exports = app;
