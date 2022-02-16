@@ -13,61 +13,28 @@ import MapIcon from '@mui/icons-material/Map';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useState } from 'react';
-import SimpleStoreDialog from './../../../components/SimpleStoreDialog/SimpleStoreDialog';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { economicTwistApi } from "../../../api/economic-twist";
-import { economicActivityApi } from "../../../api/economic-activity";
 
-export default function EmitterData() {
-  const [ economicTwistList, setEconomicTwistList ] = useState([]);
-  const [ economicActivityList, setEconomicActivityList ] = useState([]);
-
-  const [ transmitterEconomicTwistOpen, setTransmitterEconomicTwistOpen ] = useState(false);
-  const [ transmitterEconomicActivityOpen, setTransmitterEconomicActivityOpen ] = useState(false);
-
+export default function EmitterData(props) {
   const [ transmitterBusinessName, setTransmitterBusinessName ] = useState('');
   const [ transmitterAddress, setTransmitterAddress ] = useState('');
   const [ transmitterCommune, setTransmitterCommune ] = useState('');
   const [ transmitterCity, setTransmitterCity ] = useState('');
   const [ transmitterEmail, setTransmitterEmail ] = useState('');
   const [ transmitterPhone, setTransmitterPhone ] = useState('');
-  const [ transmitterEconomicTwist, setTransmitterEconomicTwist ] = useState('');
   const [ transmitterEconomicActivity, setTransmitterEconomicActivity ] = useState('');
 
-  const { register, setValue, formState: { errors } } = useFormContext();
+  const { register, setValue, watch, formState: { errors } } = useFormContext();
+
+  const transmitterEconomicActivityWatch = watch('transmitterEconomicActivity', '');
 
   useEffect(() => {
-    loadNeedsData();
-  }, []);
+    setTransmitterEconomicActivity(transmitterEconomicActivityWatch === 'create' ? '' : transmitterEconomicActivityWatch);
 
-  const loadNeedsData = async () => {
-    try {
-      setEconomicTwistList(await economicTwistApi.getAll());
-      setEconomicActivityList(await economicActivityApi.getAll());
-    } catch (err) {
-
+    if (transmitterEconomicActivityWatch === 'create') {
+      return props.openTransmitterEconomicActivity(true);
     }
-  }
-
-  const onCreateTransmitterEconomicTwist = (createdValue) => {
-    setTransmitterEconomicTwistOpen(false);
-
-    if (createdValue && createdValue.id) {
-      setEconomicTwistList(oldArray => [createdValue, ...oldArray]);
-      setTransmitterEconomicTwist(createdValue.id);
-      setValue("transmitterEconomicTwist", createdValue.id, { shouldValidate: true });
-    }
-  }
-
-  const onCreateTransmitterEconomicActivity = (createdValue) => {
-    setTransmitterEconomicActivityOpen(false);
-
-    if (createdValue && createdValue.id) {
-      setEconomicActivityList(oldArray => [createdValue, ...oldArray]);
-      setTransmitterEconomicActivity(createdValue.id);
-      setValue("transmitterEconomicActivity", createdValue.id, { shouldValidate: true });
-    }
-  }
+  }, [transmitterEconomicActivityWatch]);
 
   return (<>
     <CardHeader avatar={<PersonPinTwoToneIcon fontSize="large" color="secondary" />} title="DATOS EMISOR" subheader="Emisión de factura" />
@@ -163,22 +130,19 @@ export default function EmitterData() {
             select
             label="Giro"
             required
-            value={transmitterEconomicTwist}
+            defaultValue=""
             onChange={e => {
               if (e.target.value === 'create') {
-                return setTransmitterEconomicTwistOpen(true);
+                return props.openTransmitterEconomicTwist(true);
               }
 
-              setTransmitterEconomicTwist(e.target.value);
               setValue("transmitterEconomicTwist", e.target.value);
             }}
           >
             <MenuItem value="create"><ListItemIcon><AddCircleOutlineIcon fontSize="small" /></ListItemIcon> Crear giro</MenuItem>
 
-            {economicTwistList.map((economicTwist, index) => <MenuItem key={index} value={economicTwist.id}>{economicTwist.name}</MenuItem>)}
+            {props.economicTwistList.map((economicTwist, index) => <MenuItem key={index} value={economicTwist.id}>{economicTwist.name}</MenuItem>)}
           </TextField>
-
-          <SimpleStoreDialog title="Crear giro" content="Estás por crear un nuevo giro que estará disponible para próximas facturas." inputLabel="Nombre del giro" fieldName="name" open={transmitterEconomicTwistOpen} store={async (data) => await economicTwistApi.store(data)} onClose={createdValue => onCreateTransmitterEconomicTwist(createdValue)} />
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -187,21 +151,11 @@ export default function EmitterData() {
             label="Actividad económica"
             required
             value={transmitterEconomicActivity}
-            onChange={e => {
-              if (e.target.value === 'create') {
-                return setTransmitterEconomicActivityOpen(true);
-              }
-
-              setTransmitterEconomicActivity(e.target.value);
-              setValue("transmitterEconomicActivity", e.target.value)
-            }}
           >
             <MenuItem value="create"><ListItemIcon><AddCircleOutlineIcon fontSize="small" /></ListItemIcon> Crear actividad económica</MenuItem>
             
-            {economicActivityList.map((economicActivity, index) => <MenuItem key={index} value={economicActivity.id}>{economicActivity.name}</MenuItem>)}
+            {props.economicActivityList.map((economicActivity, index) => <MenuItem key={index} value={economicActivity.id}>{economicActivity.name}</MenuItem>)}
           </TextField>
-
-          <SimpleStoreDialog title="Crear actividad económica" content="Estás por crear una nueva actividad económica que estará disponible para próximas facturas." fieldName="name" inputLabel="Nombre de la actividad económica" open={transmitterEconomicActivityOpen} store={async (data) => await economicActivityApi.store(data)} onClose={createdValue => onCreateTransmitterEconomicActivity(createdValue)} />
         </Grid>
       </Grid>
     </CardContent>
