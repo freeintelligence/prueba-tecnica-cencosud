@@ -17,6 +17,7 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 import { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
+import Chip from '@mui/material/Chip';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useEffect } from "react";
 import { useSnackbar } from 'notistack';
@@ -43,7 +44,19 @@ export default function ReceiverData() {
     setValue(`products.${index}.${keyname}`, value);
 
     const subtotal = getValues(`products.${index}.price`) * getValues(`products.${index}.amount`);
-    setValue(`products.${index}.subtotal`, subtotal)
+    setValue(`products.${index}.subtotal`, subtotal, { shouldValidate: true });
+  }
+
+  const calcTotal = () => {
+    return getValues('products')?.reduce((prev, curr) => prev + (curr.price * curr.amount), 0) ?? 0;
+  }
+
+  const calcTax = () => {
+    return process.env.REACT_APP_TAX_PERCENT * calcTotal() / 100;
+  }
+
+  const calcSubtotal = () => {
+    return calcTotal() - calcTax();
   }
 
   useEffect(() => {
@@ -92,34 +105,34 @@ export default function ReceiverData() {
                 />
               </TableCell>
               <TableCell width={"20%"} align="right">
-                  <TextField
-                    {...register(`products.${index}.price`, { required: true, min: 1, max: Number.MAX_SAFE_INTEGER })}
-                    error={!!errors?.products?.[index]?.price}
-                    helperText={errors?.products?.[index]?.price ? 'El precio es inválido' : ''}
-                    onChange={e => setProductValue(index, 'price', Math.round(e.target.value ?? 0))}
-                    label="Precio"
-                    size="small"
-                    type="number"
-                  />
+                <TextField
+                  {...register(`products.${index}.price`, { required: true, min: 1, max: Number.MAX_SAFE_INTEGER })}
+                  error={!!errors?.products?.[index]?.price}
+                  helperText={errors?.products?.[index]?.price ? 'El precio es inválido' : ''}
+                  onChange={e => setProductValue(index, 'price', Math.round(e.target.value ?? 0))}
+                  label="Precio"
+                  size="small"
+                  type="number"
+                />
               </TableCell>
               <TableCell width={"15%"} align="right"><TextField {...register(`products.${index}.subtotal`)} label="Subtotal" size="small" disabled /></TableCell>
               <TableCell width={"15%"} align="right"><IconButton onClick={() => removeProduct(index)} color="error"><DeleteIcon /></IconButton></TableCell>
             </TableRow>)}
 
-            {/*<TableRow>
+            <TableRow>
               <TableCell rowSpan={3} />
               <TableCell colSpan={3}>Subtotal</TableCell>
-              <TableCell align="right">Valor sin iva</TableCell>
+              <TableCell align="right"><Chip label={`$ ${calcSubtotal().toLocaleString()}`} /></TableCell>
             </TableRow>
             <TableRow>
               <TableCell colSpan={2}>IVA</TableCell>
-              <TableCell align="right">10%</TableCell>
-              <TableCell align="right">Valor del iva</TableCell>
+              <TableCell align="right">{process.env.REACT_APP_TAX_PERCENT}%</TableCell>
+              <TableCell align="right"><Chip label={`$ ${calcTax().toLocaleString()}`} /></TableCell>
             </TableRow>
             <TableRow>
               <TableCell colSpan={3}>Total</TableCell>
-              <TableCell align="right">Valor con iva</TableCell>
-            </TableRow>*/}
+              <TableCell align="right"><Chip label={`$ ${calcTotal().toLocaleString()}`} /></TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
