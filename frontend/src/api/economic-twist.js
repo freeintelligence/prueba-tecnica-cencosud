@@ -1,7 +1,9 @@
+import { api } from "./api";
+
 export const economicTwistApi = {
 
   getAll: async () => {
-    const r = await fetch('https://jsonplaceholder.typicode.com/comments');
+    const r = await fetch(api.url('/comments'));
     const json = await r.json();
 
     if (!r.ok) {
@@ -12,7 +14,7 @@ export const economicTwistApi = {
   },
 
   store: async (data) => {
-    const r = await fetch('https://jsonplaceholder.typicode.com/comments', {
+    const r = await fetch(api.url('/comments'), {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {

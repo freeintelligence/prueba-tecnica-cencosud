@@ -1,7 +1,9 @@
+import { api } from "./api";
+
 export const economicActivityApi = {
 
   getAll: async () => {
-    const r = await fetch('https://jsonplaceholder.typicode.com/users');
+    const r = await fetch(api.url('/users'));
     const json = await r.json();
 
     if (!r.ok) {
@@ -12,7 +14,7 @@ export const economicActivityApi = {
   },
 
   store: async (data) => {
-    const r = await fetch('https://jsonplaceholder.typicode.com/users', {
+    const r = await fetch(api.url('/users'), {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
