@@ -4,7 +4,7 @@ const { EconomicActivity } = require('../models/economicActivity');
 const { body, validationResult } = require('express-validator');
 
 router.get('/', async function(req, res, next) {
-  const documents = await EconomicActivity.find();
+  const documents = await EconomicActivity.find().sort({ _id: -1 });
   res.json(documents);
 });
 
