@@ -20,16 +20,20 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import { invoicesApi } from '../../api/invoices';
+import { useSnackbar } from 'notistack';
 
 export default function Create() {
   const [ loading, setLoading ] = useState(false);
   const [ error, setError ] = useState(null);
+  const [ success, setSuccess ] = useState(false);
   const [ economicTwistOpen, setEconomicTwistOpen ] = useState(false);
   const [ economicTwistOpenFromComponent, setEconomicTwistOpenFromComponent ] = useState();
   const [ economicActivityOpen, setEconomicActivityOpen ] = useState(false);
   const [ economicTwistList, setEconomicTwistList ] = useState([]);
   const [ economicActivityList, setEconomicActivityList ] = useState([]);
 
+  const { enqueueSnackbar } = useSnackbar();
   const methods = useForm({ mode: 'all' });
 
   useEffect(() => {
@@ -72,8 +76,24 @@ export default function Create() {
     setLoading(false);
   }
 
-  const onSubmit = (data) => {
-    console.log('submit', data);
+  const onSubmit = async (data) => {
+    if (loading) {
+      return;
+    }
+
+    setLoading(true);
+    setSuccess(false);
+
+    try {
+      const values = methods.getValues();
+      await invoicesApi.store(values);
+
+      setSuccess(true);
+    } catch (err) {
+      enqueueSnackbar('Tenemos problemas para emitir la factura, intenta más tarde!', { variant: 'error' });
+    }
+
+    setLoading(false);
   }
 
   return (
