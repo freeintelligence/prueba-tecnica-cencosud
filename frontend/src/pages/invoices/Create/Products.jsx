@@ -75,7 +75,7 @@ export default function ReceiverData() {
               </TableCell>
               <TableCell width={"20%"} align="right">
                 <TextField
-                  {...register(`products.${index}.amount`, { required: true })}
+                  {...register(`products.${index}.amount`, { required: true, min: 1, max: Number.MAX_SAFE_INTEGER })}
                   error={!!errors?.products?.[index]?.amount}
                   helperText={errors?.products?.[index]?.amount ? 'La cantidad es obligatoria' : ''}
                   onChange={e => setProductValue(index, 'amount', Math.round(e.target.value ?? 0))}
@@ -86,7 +86,7 @@ export default function ReceiverData() {
               </TableCell>
               <TableCell width={"20%"} align="right">
                   <TextField
-                    {...register(`products.${index}.price`, { required: true })}
+                    {...register(`products.${index}.price`, { required: true, min: 1, max: Number.MAX_SAFE_INTEGER })}
                     error={!!errors?.products?.[index]?.price}
                     helperText={errors?.products?.[index]?.price ? 'El precio es obligatorio' : ''}
                     onChange={e => setProductValue(index, 'price', Math.round(e.target.value ?? 0))}

@@ -6,6 +6,11 @@ import CardContent from '@mui/material/CardContent';
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import PersonPinTwoToneIcon from '@mui/icons-material/PersonPinTwoTone';
+import BadgeIcon from '@mui/icons-material/Badge';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import MapIcon from '@mui/icons-material/Map';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import InputAdornment from '@mui/material/InputAdornment';
 import { useState } from 'react';
 
 export default function EmitterData() {
@@ -28,48 +33,84 @@ export default function EmitterData() {
           <TextField
             {...register("transmitterBusinessName", { required: true })} error={!!errors.transmitterBusinessName} helperText={errors.transmitterBusinessName ? 'La razón social es obligatoria' : ''}
             label="Razón social"
+            required
             value={transmitterBusinessName}
-            onChange={e => { setTransmitterBusinessName(e.target.value); setValue("transmitterBusinessName", e.target.value, { shouldValidate: true }) }}
+            onChange={e => { setTransmitterBusinessName(e.target.value); setValue("transmitterBusinessName", e.target.value) }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <BadgeIcon />
+                </InputAdornment>
+              ),
+            }}
           />
         </Grid>
         <Grid item xs={6}>
           <TextField
-            {...register("transmitterAddress", { required: true })} error={!!errors.transmitterAddress} helperText={errors.transmitterAddress ? 'La dirección es obligatoria' : ''}
+            {...register("transmitterAddress", { required: true, maxLength: 1024 })} error={!!errors.transmitterAddress} helperText={errors.transmitterAddress ? 'La dirección es inválida' : ''}
             label="Dirección"
+            required
             value={transmitterAddress}
-            onChange={e => { setTransmitterAddress(e.target.value); setValue("transmitterAddress", e.target.value, { shouldValidate: true }) }}
+            onChange={e => { setTransmitterAddress(e.target.value); setValue("transmitterAddress", e.target.value) }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <MapIcon />
+                </InputAdornment>
+              ),
+            }}
           />
         </Grid>
         <Grid item xs={3}>
           <TextField
-            {...register("transmitterCommune", { required: true })} error={!!errors.transmitterCommune} helperText={errors.transmitterCommune ? 'La comuna es obligatoria' : ''}
+            {...register("transmitterCommune", { required: true, maxLength: 1024 })} error={!!errors.transmitterCommune} helperText={errors.transmitterCommune ? 'La comuna es inválida' : ''}
             label="Comuna"
+            required
             value={transmitterCommune}
-            onChange={e => { setTransmitterCommune(e.target.value); setValue("transmitterCommune", e.target.value, { shouldValidate: true }) }}
+            onChange={e => { setTransmitterCommune(e.target.value); setValue("transmitterCommune", e.target.value) }}
           />
         </Grid>
         <Grid item xs={3}>
           <TextField
-            {...register("transmitterCity", { required: true })} error={!!errors.transmitterCity} helperText={errors.transmitterCity ? 'La ciudad es obligatoria' : ''}
+            {...register("transmitterCity", { required: true, maxLength: 1024 })} error={!!errors.transmitterCity} helperText={errors.transmitterCity ? 'La ciudad es inválida' : ''}
             label="Ciudad"
+            required
             value={transmitterCity}
-            onChange={e => { setTransmitterCity(e.target.value); setValue("transmitterCity", e.target.value, { shouldValidate: true }) }}
+            onChange={e => { setTransmitterCity(e.target.value); setValue("transmitterCity", e.target.value) }}
           />
         </Grid>
         <Grid item xs={6}>
           <TextField
-            {...register("transmitterEmail", { required: true })} error={!!errors.transmitterEmail} helperText={errors.transmitterEmail ? 'El correo electrónico es obligatorio' : ''}
+            {...register("transmitterEmail", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })} error={!!errors.transmitterEmail} helperText={errors.transmitterEmail ? 'El correo electrónico es invalido' : ''}
             label="Correo electrónico"
+            required
             value={transmitterEmail}
-            onChange={e => { setTransmitterEmail(e.target.value); setValue("transmitterEmail", e.target.value, { shouldValidate: true }) }}
+            onChange={e => { setTransmitterEmail(e.target.value); setValue("transmitterEmail", e.target.value) }}
+            type="email"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <AlternateEmailIcon />
+                </InputAdornment>
+              ),
+            }}
           />
         </Grid>
         <Grid item xs={6}>
           <TextField
-            {...register("transmitterPhone", { required: true })} error={!!errors.transmitterPhone} helperText={errors.transmitterPhone ? 'El teléfono es obligatorio' : ''}
+            {...register("transmitterPhone", { required: true, minLength: 7, maxLength: 12 })} error={!!errors.transmitterPhone} helperText={errors.transmitterPhone ? 'El teléfono es inválido' : ''}
             label="Teléfono"
+            required
             value={transmitterPhone}
-            onChange={e => { setTransmitterPhone(e.target.value); setValue("transmitterPhone", e.target.value, { shouldValidate: true }) }}
+            onChange={e => { setTransmitterPhone(e.target.value); setValue("transmitterPhone", e.target.value) }}
+            InputProps={{
+              startAdornment: <InputAdornment position="start">+56 9</InputAdornment>,
+              endAdornment: (
+                <InputAdornment position="start">
+                  <LocalPhoneIcon />
+                </InputAdornment>
+              ),
+            }}
           />
         </Grid>
         <Grid item xs={6}>
@@ -77,8 +118,9 @@ export default function EmitterData() {
             {...register("transmitterEconomicTwist", { required: true })} error={!!errors.transmitterEconomicTwist} helperText={errors.transmitterEconomicTwist ? 'El giro es obligatorio' : ''}
             select
             label="Giro"
+            required
             value={transmitterEconomicTwist}
-            onChange={e => { setTransmitterEconomicTwist(e.target.value); setValue("transmitterEconomicTwist", e.target.value, { shouldValidate: true }) }}
+            onChange={e => { setTransmitterEconomicTwist(e.target.value); setValue("transmitterEconomicTwist", e.target.value) }}
           >
             <MenuItem value={1}>
               Giro económico #1
@@ -90,8 +132,9 @@ export default function EmitterData() {
             {...register("transmitterEconomicActivity", { required: true })} error={!!errors.transmitterEconomicActivity} helperText={errors.transmitterEconomicActivity ? 'La actividad económica es obligatoria' : ''}
             select
             label="Actividad económica"
+            required
             value={transmitterEconomicActivity}
-            onChange={e => { setTransmitterEconomicActivity(e.target.value); setValue("transmitterEconomicActivity", e.target.value, { shouldValidate: true }) }}
+            onChange={e => { setTransmitterEconomicActivity(e.target.value); setValue("transmitterEconomicActivity", e.target.value) }}
           >
             <MenuItem value={1}>
               Actividad económica #1

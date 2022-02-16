@@ -10,7 +10,7 @@ import * as moment from 'moment';
 export default function Header() {
   const [ broadcastDate, setBroadcastDate ] = useState(moment.now());
 
-  const { register, setValue, formState: { errors } } = useFormContext();
+  const { register, setValue, formState: { errors } } = useFormContext({ });
 
   return (
     <CardContent>
