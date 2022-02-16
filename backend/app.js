@@ -1,9 +1,10 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+require('dotenv').config()
+require('./database');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var economicTwistsRouter = require('./routes/economic-twists');
 
 var app = express();
 
@@ -12,7 +13,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/economic-twists', economicTwistsRouter);
 
 module.exports = app;
