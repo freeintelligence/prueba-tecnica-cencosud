@@ -20,7 +20,7 @@ export default function Create() {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={methods.handleSubmit(onSubmit)} noValidate autoComplete="off">
         <AppBar position="static">
           <Toolbar variant="dense">
             <Typography variant="h6" color="inherit" component="div">
@@ -29,14 +29,16 @@ export default function Create() {
           </Toolbar>
         </AppBar>
         <Card variant="outlined">
-          <Header></Header>
-          <EmitterData></EmitterData>
-          <ReceiverData></ReceiverData>
-          <Products></Products>
+          <div className="form-container">
+            <Header></Header>
+            <EmitterData></EmitterData>
+            <ReceiverData></ReceiverData>
+            <Products></Products>
+          </div>
 
-          <CardActions style={{justifyContent: 'center'}}>
+          <CardActions className="action-buttons">
             <Button type="submit" size="medium" variant="outlined" color="primary">Enviar factura</Button>
-            <Button size="medium" variant="outlined" color="warning">Limpiar</Button>
+            <Button size="medium" variant="text">Limpiar campos</Button>
           </CardActions>
         </Card>
       </form>
