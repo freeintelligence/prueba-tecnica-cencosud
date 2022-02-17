@@ -14,7 +14,7 @@ module.exports = class TypeInvoice extends BaseType {
   }
 
   async run() {
-    //await this.sendTransmitterMail();
+    await this.sendTransmitterMail();
     await this.sendReceiverMail();
   }
 
