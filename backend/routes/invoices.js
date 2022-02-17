@@ -46,8 +46,7 @@ router.post('/',
     return res.status(500).json({ message: 'Service Unavailable' });
   }
 
-  //return res.status(201).json({});
-  return res.status(404).json({});
+  return res.status(201).json({});
 });
 
 module.exports = router;

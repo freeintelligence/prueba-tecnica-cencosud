@@ -44,7 +44,7 @@ export default function ReceiverData() {
     setValue(`products.${index}.${keyname}`, value);
 
     const subtotal = getValues(`products.${index}.price`) * getValues(`products.${index}.amount`);
-    setValue(`products.${index}.subtotal`, subtotal, { shouldValidate: true });
+    setValue(`products.${index}.subtotal`, subtotal.toLocaleString(), { shouldValidate: true });
   }
 
   const calcTotal = () => {
