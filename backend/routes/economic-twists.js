@@ -4,8 +4,8 @@ const { EconomicTwist } = require('../models/economicTwist');
 const { body, validationResult } = require('express-validator');
 
 router.get('/', async function(req, res, next) {
-  const documents = await EconomicTwist.find().sort({ _id: -1 });
-  res.json(documents);
+  const result = await EconomicTwist.findAll({ order: [[ 'id', 'DESC' ]] });
+  res.json(result);
 });
 
 router.post('/', body('name').isString(), body('name').isLength({ min: 1, max: 1024 }), async function(req, res) {

@@ -1,14 +1,18 @@
-const mongoose = require('mongoose');
-
-mongoose.set('toJSON', {
-  virtuals: true,
-  transform: (doc, converted) => {
-    delete converted._id;
-  }
-});
+const path = require('path');
+const { Sequelize } = require('sequelize');
+const sequelize = new Sequelize({ dialect: 'sqlite', storage: path.join(__dirname, 'database', process.env.DB_NAME) });
 
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/cencosud');
+  await sequelize.authenticate();
+
+  require('./models/economicActivity');
+  require('./models/economicTwist');
+
+  await sequelize.sync();
 }
 
 main().then(e => console.log('Database connected!')).catch(err => console.log(err));
+
+module.exports = {
+  sequelize,
+}

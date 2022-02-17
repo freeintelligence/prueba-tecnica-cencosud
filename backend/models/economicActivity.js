@@ -1,7 +1,11 @@
-const mongoose = require('mongoose');
+const { Model, DataTypes } = require('sequelize');
+const { sequelize } = require('../database');
 
-module.exports.economicActivitySchema = new mongoose.Schema({
-  name: String,
-}, { collection: 'economic_activities'});
+class EconomicActivity extends Model {}
+EconomicActivity.init({
+  name: DataTypes.STRING,
+}, { sequelize: sequelize, modelName: 'EconomicActivity' });
 
-module.exports.EconomicActivity = mongoose.model('EconomicActivity', module.exports.economicActivitySchema);
+module.exports = {
+  EconomicActivity,
+}
