@@ -1,7 +1,7 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 require('./database');
-const { consumer } = require('./kafka');
+const { consumer, producer, sendMail } = require('./kafka');
 const { Invoice } = require('./models/Invoice');
 
 const main = async () => {
@@ -17,6 +17,11 @@ const main = async () => {
         const data = JSON.parse(message.value.toString());
         const document = new Invoice(data);
         await document.save();
+
+        await sendMail({
+          type: 'invoice',
+          data,
+        });
       } catch (err) {
         console.log('Error', err);
       }
