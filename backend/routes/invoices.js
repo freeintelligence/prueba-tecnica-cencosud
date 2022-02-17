@@ -3,6 +3,8 @@ var router = express.Router();
 const { body, validationResult, matchedData } = require('express-validator');
 const rutValidator = require('../validators/rutValidator');
 const { producer } = require('../kafka');
+const economicTwistValidator = require('../validators/economicTwistValidator');
+const economicActivityValidator = require('../validators/economicActivityValidator');
 
 router.post('/',
   /** Validate date */
@@ -14,8 +16,8 @@ router.post('/',
   body('transmitterCity').isString().isLength({ min: 1, max: 1024 }),
   body('transmitterEmail').isEmail().isLength({ min: 1, max: 1024 }),
   body('transmitterPhone').isString().isLength({ min: 7, max: 12 }),
-  body('transmitterEconomicTwist').isString().isLength({ min: 1 }),
-  body('transmitterEconomicActivity').isString().isLength({ min: 1 }),
+  body('transmitterEconomicTwist').isInt().custom(economicTwistValidator),
+  body('transmitterEconomicActivity').isInt().custom(economicActivityValidator),
   /** Validate receiver data */
   body('receiverRut').isString().isLength({ min: 1, max: 1024 }).custom(rutValidator),
   body('receiverBusinessName').isString().isLength({ min: 1, max: 1024 }),
@@ -24,7 +26,7 @@ router.post('/',
   body('receiverCity').isString().isLength({ min: 1, max: 1024 }),
   body('receiverContactName').isString().isLength({ min: 1, max: 1024 }),
   body('receiverContactRut').isString().isLength({ min: 1, max: 1024 }).custom(rutValidator),
-  body('receiverEconomicTwist').isString().isLength({ min: 1 }),
+  body('receiverEconomicTwist').isInt().custom(economicTwistValidator),
   body('receiverContactEmail').isEmail().isLength({ min: 1, max: 1024 }),
   /** Validate products data */
   body('products.*.name').isString().isLength({ min: 1, max: 1024 }),
