@@ -35,5 +35,16 @@ Luego de eso, se abrirá el backend disponible en:
 
     http://localhost:4501
 
+## Microservicios
+Los 2 microservicios ("emails" e "invoices") se abren de la misma forma:
+
+    cd microservices/emails
+    npm i
+    npm run start
+
+    cd microservices/invoices
+    npm i
+    npm run start
+
 ## Salud
 --
