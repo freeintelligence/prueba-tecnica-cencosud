@@ -46,8 +46,7 @@ router.post('/',
     return res.status(500).json({ message: 'Service Unavailable' });
   }
 
-  //const created = await Invoice.create({});
-  //return res.json(created);
+  //return res.status(201).json({});
   return res.status(404).json({});
 });
 
