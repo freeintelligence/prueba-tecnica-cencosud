@@ -16,7 +16,8 @@ const main = async () => {
 
         const data = JSON.parse(message.value.toString());
         const document = new Invoice(data);
-        await document.save();
+        const r = await document.save();
+        data.id = r.id;
 
         await sendMail({
           type: 'invoice',

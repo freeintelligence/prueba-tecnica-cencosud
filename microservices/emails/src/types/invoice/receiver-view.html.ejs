@@ -111,20 +111,22 @@ table.sign tr td {
     		<header>
 			<h1>Factura</h1>
 			<address >
+        <p> <%= transmitterBusinessName %></p>
 				<p> <%= transmitterEmail %> </p>
-				<p> <%= transmitterAddress %>, <%= transmitterCommune %> </p>
+				<!--<p> <%= transmitterAddress %>, <%= transmitterCommune %> </p>
 				<p> <%= transmitterCity %> </p>
-				<p> Teléfono: <%= transmitterPhone %> </p>
+				<p> Teléfono: <%= transmitterPhone %> </p>-->
 			</address>
 		</header>
 		<article>
-			<h1>Receptor</h1>
 			<address class="norm">
 				<h4> <%= receiverContactName %> </h4>
-				<p> <%= receiverContactEmail %> <br>
-				<p> <%= receiverAddress %>, <%= receiverCommune %> <br>
-				<p> <%= receiverCity %> <br>
-				<p> Teléfono: <%= receiverContactEmail %> </p>
+				<p>
+          <%= receiverContactEmail %> <br>
+				  <!--<%= receiverAddress %>, <%= receiverCommune %> <br>
+				  <%= receiverCity %> <br>
+				  Teléfono: <%= receiverContactEmail %>-->
+        </p>
 			</address>
 			
 			<table class="meta">
@@ -138,7 +140,7 @@ table.sign tr td {
 				</tr>
 				<tr>
 					<th><span >Importe</span></th>
-					<td><span id="prefix" >$</span><span><%= products.reduce((prev, curr) => prev + (curr.amount * curr.price), 0) %></span></td>
+					<td><span id="prefix" >$</span><span><%= products.reduce((prev, curr) => prev + (curr.amount * curr.price), 0).toLocaleString() %></span></td>
 				</tr>
 			</table>
 			<table class="inventory">
@@ -154,11 +156,11 @@ table.sign tr td {
 				<tbody>
           <% products.forEach(function(product, i) { %>
             <tr>
-              <td><span ><%= i %>.</span></td>
+              <td><span ><%= i + 1 %>.</span></td>
               <td><span ><%= product.name %></span></td>
               <td><span ><%= product.amount %></span></td>
-              <td><span data-prefix>$</span><span ><%= product.price %></span></td>
-              <td><span data-prefix>$</span><span><%= product.amount * product.price %></span></td>
+              <td><span data-prefix>$</span><span ><%= (product.price).toLocaleString() %></span></td>
+              <td><span data-prefix>$</span><span><%= (product.amount * product.price).toLocaleString() %></span></td>
             </tr>
           <% }); %>
 				</tbody>
@@ -167,7 +169,7 @@ table.sign tr td {
 			<table class="balance">
 				<tr>
 					<th><span >Total</span></th>
-					<td><span data-prefix>$</span><span><%= products.reduce((prev, curr) => prev + (curr.amount * curr.price), 0) %></span></td>
+					<td><span data-prefix>$</span><span><%= products.reduce((prev, curr) => prev + (curr.amount * curr.price), 0).toLocaleString() %></span></td>
 				</tr>
 			</table>
 		</article>
