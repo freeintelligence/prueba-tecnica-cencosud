@@ -1,3 +1,5 @@
+require('./../mail');
+
 module.exports = class BaseType {
 
   data = {};
