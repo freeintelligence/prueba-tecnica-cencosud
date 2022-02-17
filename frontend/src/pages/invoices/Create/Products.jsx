@@ -28,7 +28,7 @@ export default function ReceiverData() {
   const { fields, prepend, remove } = useFieldArray({ name: 'products', control });
 
   const addProduct = () => {
-    prepend({ name: '', amount: 0, price: 0, subtotal: 0 });
+    prepend({ name: '', amount: 0, price: 0, subtotal: 0 }, { shouldFocus: !!fields.length });
   }
 
   const removeProduct = (index) => {
